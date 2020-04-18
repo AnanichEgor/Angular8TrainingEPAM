@@ -10,6 +10,7 @@ import { AppState, ProductsState } from './../../../core/@ngrx';
 // rxjs
 import { Observable } from 'rxjs';
 import { addProductToCatr } from 'src/app/core/@ngrx/cart/cart.actions';
+import {selectProductsData} from "../../../core/@ngrx/products/products.selectors";
 
 
 
@@ -19,7 +20,7 @@ import { addProductToCatr } from 'src/app/core/@ngrx/cart/cart.actions';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  productsState$: Observable<ProductsState>;
+  productsState$: Observable<ReadonlyArray<Product>>;
 
   constructor(
     private store: Store<AppState>,
@@ -29,7 +30,7 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productsState$ = this.store.pipe(select('products'));
+    this.productsState$ = this.store.pipe(select(selectProductsData));
     this.store.dispatch(getProducts());
   }
 
